@@ -127,29 +127,6 @@ EOF
     sed -i '/\[mysqld\]/ainnodb_large_prefix=on'       /etc/mysql/mariadb.conf.d/50-server.cnf 
     sed -i '/\[mysqld\]/ainnodb_file_per_table=1'      /etc/mysql/mariadb.conf.d/50-server.cnf 
     sed -i '/\[mysqld\]/ainnodb_file_format=barracuda' /etc/mysql/mariadb.conf.d/50-server.cnf
-
-    cat > /etc/apache2/sites-available/nextcloud.conf <<'EOF'
-<IfModule mod_ssl.c>
-  <VirtualHost _default_:443>
-    DocumentRoot /var/www/nextcloud
-    CustomLog /var/www/nextcloud/data/access.log combined
-    ErrorLog /var/www/nextcloud/data/error.log
-    SSLEngine on
-    SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
-    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-  </VirtualHost>
-  <Directory /var/www/nextcloud/>
-    Options +FollowSymlinks
-    AllowOverride All
-    <IfModule mod_dav.c>
-      Dav off
-    </IfModule>
-    LimitRequestBody 0
-    SSLRenegBufferSize 10486000
-  </Directory>
-</IfModule>
-EOF
-    a2ensite nextcloud
 }
 
 configure() { :; }
